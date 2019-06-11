@@ -1,6 +1,7 @@
 #include <iostream>
 
+#include "./config/reader.cpp"
+
 int main() {
-    std::cout << "Hello, World!";
-    return 0;
+    return configReader("./config.json");
 }
