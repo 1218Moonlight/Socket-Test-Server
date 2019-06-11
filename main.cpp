@@ -1,7 +1,9 @@
 #include <iostream>
 
-#include "./config/reader.cpp"
+#include "./config/main.cpp"
 
 int main() {
-    return configReader("./config.json");
+    Config config("config.json");
+    config.read();
+    return 0;
 }

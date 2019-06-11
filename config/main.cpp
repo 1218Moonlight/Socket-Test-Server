@@ -34,25 +34,36 @@ POSSIBILITY OF SUCH DAMAGE.
 
 #include "picojson.h"
 
-int configReader(std::string configPath) {
-    std::ifstream ifs(configPath, std::ios::in);    
-    if (ifs.fail()) {
-        std::cerr << "failed to read " << configPath << std::endl;
-        return 1;
+class Config
+{
+
+public:
+    std::string configpath;
+
+    Config(std::string configPath)
+    {
+        configpath = configPath;
     }
 
-    const std::string json((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
-    ifs.close();
+    void read()
+    {
+        std::ifstream ifs(configpath, std::ios::in);
+        if (ifs.fail())
+        {
+            std::cerr << "failed to read " << configpath << std::endl;
+        }
 
-    picojson::value v;
-    const std::string err = picojson::parse(v, json);
-    if (err.empty() == false) {
-        std::cerr << err << std::endl;
-        return 2;
+        const std::string json((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
+        ifs.close();
+
+        picojson::value v;
+        const std::string err = picojson::parse(v, json);
+        if (err.empty() == false)
+        {
+            std::cerr << err << std::endl;
+        }
+
+        std::cout << v << std::endl;
+        std::cout << std::endl;
     }
-
-    std::cout << v << std::endl;
-    std::cout << std::endl;
-
-    return 0;
-}
+};
