@@ -26,12 +26,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <iostream>
 #include <fstream>
-#include <sstream>
-#include <string>
-#include <iterator>
-
 #include "picojson.h"
 
 class Config
@@ -39,31 +34,32 @@ class Config
 
 public:
     std::string configpath;
+    picojson::value jsonValue;
 
     Config(std::string configPath)
     {
         configpath = configPath;
     }
 
-    void read()
+    picojson::object &read()
     {
         std::ifstream ifs(configpath, std::ios::in);
         if (ifs.fail())
         {
             std::cerr << "failed to read " << configpath << std::endl;
+            return jsonValue.get<picojson::object>();
         }
 
         const std::string json((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
         ifs.close();
 
-        picojson::value v;
-        const std::string err = picojson::parse(v, json);
+        const std::string err = picojson::parse(jsonValue, json);
         if (err.empty() == false)
         {
             std::cerr << err << std::endl;
+            return jsonValue.get<picojson::object>();
         }
 
-        std::cout << v << std::endl;
-        std::cout << std::endl;
+        return jsonValue.get<picojson::object>();
     }
 };
