@@ -1,8 +1,6 @@
-#include <iostream>
-
-#include "config.cpp"
-#include "picojson.h"
-#include "server.cpp"
+#include "initInclude.h"
+#include "config.h"
+#include "server.h"
 
 Server server;
 
@@ -12,6 +10,7 @@ int main()
 
     picojson::object& configObj = config.read();
 
+    
     server.run(configObj);
 
     return 0;
