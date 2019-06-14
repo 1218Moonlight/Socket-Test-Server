@@ -1,17 +1,15 @@
-#include "initInclude.h"
+#include <iostream>
+
+#include "initlnclude.h"
 #include "config.h"
-#include "server.h"
+#include "handler.h"
 
-Server server;
+int main() {
+    Config config("./../config.json");
 
-int main()
-{
-    Config config("config.json");
+    Handler handler;
 
-    picojson::object& configObj = config.read();
-
-    
-    server.run(configObj);
+    handler.routing(config.picojsonObject());
 
     return 0;
 }
