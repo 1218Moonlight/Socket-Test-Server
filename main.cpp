@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "initlnclude.h"
 #include "config.h"
 #include "handler.h"
