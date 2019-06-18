@@ -1,6 +1,9 @@
 #ifndef SOCKET_TEST_SERVER_CONFIG_H
 #define SOCKET_TEST_SERVER_CONFIG_H
 
+#include "picojson.h"
+#include <fstream>
+
 class Config {
 private:
     std::string configpath;
