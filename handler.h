@@ -7,13 +7,15 @@
 class Handler {
 private:
     std::string sType;
-    Socket socket;
 public:
     void routing(picojson::object& configObject);
 };
 
 void Handler::routing(picojson::object& configObject) {
     picojson::object& jObject = configObject;
+
+    Socket socket((u_short)jObject["port"].get<double>());
+
     this->sType = jObject["type"].get<std::string>();
     if (this->sType == "echo") {
         std::cout << "echo server" << std::endl;

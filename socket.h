@@ -6,13 +6,19 @@
 
 class Socket {
 private:
+    u_short serverPort;
     SOCKET serverSock{}, clientSock{};
     WSADATA wsadata{};
     struct sockaddr_in serverInfo{}, clientInfo{};
     int clientSize{};
 public:
+    Socket(u_short serverPort);
     void run();
 };
+
+Socket::Socket(u_short serverPort) {
+    this->serverPort = serverPort;
+}
 
 void Socket::run() {
     char message[] = "TEST";
@@ -28,7 +34,7 @@ void Socket::run() {
     memset(&this->serverInfo, 0, sizeof(this->serverInfo));
 
     this->serverInfo.sin_family = AF_INET;
-    this->serverInfo.sin_port = htons(1234);
+    this->serverInfo.sin_port = htons(this->serverPort);
     this->serverInfo.sin_addr.s_addr = htonl(INADDR_ANY);
 
     if (bind(this->serverSock, (SOCKADDR *) &this->serverInfo, sizeof(this->serverInfo)) == SOCKET_ERROR)
